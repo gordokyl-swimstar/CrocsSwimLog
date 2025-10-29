@@ -6,9 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -26,11 +24,22 @@ import androidx.navigation.NavController
 
 @Composable
 fun DOTDScreen(navController: NavController, modifier: Modifier = Modifier, viewModel: DOTDViewModel) {
+    val drill = viewModel.currentDrill.value
+    val (title, description, yardage) = drill
+
     val imageModifier = Modifier
         .size(250.dp)
         .border(BorderStroke(3.dp, Color.Black))
 
     val colorList = listOf(Color.Cyan, Color.Blue)
+
+    // Pick image based on stroke type
+    val imageRes = when (drill.stroke) {
+        StrokeType.FREESTYLE -> R.drawable.freestyle_dotd
+        StrokeType.BACKSTROKE -> R.drawable.backstroke_dotd
+        StrokeType.BREASTSTROKE -> R.drawable.breaststroke_dotd
+        StrokeType.BUTTERFLY -> R.drawable.butterfly_dotd
+    }
 
     Column(
         modifier = modifier
@@ -49,7 +58,7 @@ fun DOTDScreen(navController: NavController, modifier: Modifier = Modifier, view
         )
 
         // This will pull from a database of drills randomly. The title goes here
-        Text("Laneline Drill",
+        Text(title,
             modifier = Modifier.padding(16.dp),
             color = Color.White,
             fontSize = 20.sp
@@ -57,16 +66,13 @@ fun DOTDScreen(navController: NavController, modifier: Modifier = Modifier, view
 
         // This image will change depending on the drill of the day, matching the stroke of the drill
         Image(
-            painter = painterResource(id = R.drawable.backstroke_dotd),
+            painter = painterResource(imageRes),
             contentDescription = null,
             modifier = imageModifier
         )
 
         // This will pull from a database of drills randomly. The description goes here
-        Text("The swimmer uses the arm closest to the laneline to swim backstroke. When they " +
-                "pull, rather than just the hand, the swimmer uses the laneline to boost their " +
-                "backstroke while turning their shoulder to touch their chin working on rotation, " +
-                "stability, and power.",
+        Text(description,
             modifier = Modifier.padding(16.dp),
             color = Color.White,
             fontSize = 16.sp,
@@ -75,16 +81,15 @@ fun DOTDScreen(navController: NavController, modifier: Modifier = Modifier, view
 
         // This will pull from a database of drills randomly. The recommended workout goes here
         Text(
-            "Recommended Workout: 8 x 25 on the 30, on the 4th 25 swim regular Backstroke",
+            yardage,
             color = Color.White,
             fontSize = 16.sp,
             modifier = Modifier.padding(16.dp),
             textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
 
-        Button(onClick = { }) {
+        Button(onClick = {viewModel.generateNewDrill() }) {
             Text("Generate New Drill")
         }
-
     }
 }
