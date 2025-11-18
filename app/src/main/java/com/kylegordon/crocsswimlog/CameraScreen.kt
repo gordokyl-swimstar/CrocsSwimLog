@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 
     //@OptIn(ExperimentalPermissionsAPI::class)
     @Composable
-    fun CameraScreen(navController : NavController, modifier: Modifier = Modifier, viewModel: AppViewModel) {
+    fun CameraScreen(navController : NavController, modifier: Modifier = Modifier, viewModel: CameraViewModel) {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val imgUri by viewModel.imageFileUri.collectAsState()
@@ -48,7 +48,7 @@ import kotlinx.coroutines.launch
             }
         }
         Column(modifier = modifier.padding(start = 8.dp)) {
-            Text("Intents with result")
+            Text("Button closes app for some reason")
             LazyVerticalGrid(
                 columns = GridCells.Fixed(
                     count = 2
