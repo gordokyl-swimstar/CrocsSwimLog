@@ -14,11 +14,14 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kylegordon.crocsswimlog.data.SwimLogDatabase
 import com.kylegordon.crocsswimlog.ui.theme.CrocsSwimLogTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,6 +40,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CrocsSwimLogApp() {
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val dao = SwimLogDatabase.getDatabase(context).swimLogDao()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -83,9 +88,31 @@ fun CrocsSwimLogApp() {
             startDestination = "main",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("main") { MainScreen(navController, viewModel = MainScreenViewModel()) }
-            composable("swim_log") { SwimLogScreen(navController, viewModel = SwimLogViewModel()) }
-            composable("new_workout_entry") { WorkoutEntryScreen(navController, viewModel = WorkoutEntryViewModel()) }
+            // Main Screen
+            composable("main") {
+                val mainViewModel: MainScreenViewModel = viewModel(
+                    factory = MainScreenViewModelFactory(dao)
+                )
+                MainScreen(navController, viewModel = mainViewModel)
+            }
+
+            // Swim Log Screen
+            composable("swim_log") {
+                val swimLogViewModel: SwimLogViewModel = viewModel(
+                    factory = SwimLogViewModelFactory(dao)
+                )
+                SwimLogScreen(navController, viewModel = swimLogViewModel)
+            }
+
+            // New Workout Entry Screen
+            composable("new_workout_entry") {
+                val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
+                    factory = WorkoutEntryViewModelFactory(dao)
+                )
+                WorkoutEntryScreen(navController, viewModel = workoutEntryViewModel)
+            }
+
+            // Drill of the Day Screen
             composable("dotd") { DOTDScreen(navController, viewModel = DOTDViewModel()) }
         }
     }

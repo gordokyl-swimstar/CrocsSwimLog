@@ -2,11 +2,17 @@ package com.kylegordon.crocsswimlog
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -20,7 +26,7 @@ import androidx.navigation.NavController
 @Composable
 fun MainScreen(navController: NavController, modifier: Modifier = Modifier, viewModel: MainScreenViewModel) {
     val colorList = listOf(Color.Cyan, Color.Blue)
-    val analytics = viewModel.analytics
+    val analytics by viewModel.analytics.collectAsState()
 
     Column(
         modifier = modifier
@@ -54,7 +60,7 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier, view
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(analytics) { analytics ->
+            item {
                 Text(
                     text = "Workouts Logged: ${analytics.totalWorkouts}",
                     modifier = Modifier.padding(1.dp),
@@ -77,5 +83,6 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier, view
                 )
             }
         }
+
     }
 }

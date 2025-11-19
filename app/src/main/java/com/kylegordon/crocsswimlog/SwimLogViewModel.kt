@@ -1,21 +1,33 @@
 package com.kylegordon.crocsswimlog
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kylegordon.crocsswimlog.data.SwimLogDao
+import com.kylegordon.crocsswimlog.data.SwimLogEntry
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-data class Workout(
-    val date: String,
-    val duration: Int,
-    val stroke: String,
-    val distance: Int
-)
+class SwimLogViewModel(
+    private val dao: SwimLogDao
+) : ViewModel() {
 
-class SwimLogViewModel : ViewModel(){
-    val workouts = listOf(
-        Workout("9/29/25", 120, "Freestyle", 2500),
-        Workout("10/1/25", 120, "Backstroke", 2000),
-        Workout("10/6/25", 120, "Freestyle", 1500),
-        Workout("10/8/25", 120, "Freestyle", 3500),
-        Workout("10/13/25", 120, "Backstroke", 2000),
-        Workout("10/15/25", 120, "IM", 1250)
-    )
+    private val _entries = MutableStateFlow<List<SwimLogEntry>>(emptyList())
+    val entries: StateFlow<List<SwimLogEntry>> = _entries.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            dao.getAllEntriesFlow().collectLatest { list ->
+                _entries.value = list
+            }
+        }
+    }
+
+    fun deleteEntry(entry: SwimLogEntry) {
+        viewModelScope.launch {
+            dao.deleteEntry(entry)
+        }
+    }
 }

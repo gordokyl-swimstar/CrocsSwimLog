@@ -2,7 +2,6 @@ package com.kylegordon.crocsswimlog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,10 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.kylegordon.crocsswimlog.data.SwimLogDatabase
 
 @Composable
 fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifier, viewModel: WorkoutEntryViewModel) {
@@ -27,8 +29,15 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
     val duration by viewModel.duration.collectAsState()
     val mainStroke by viewModel.mainStroke.collectAsState()
     val totalYardage by viewModel.totalYardage.collectAsState()
-
     val colorList = listOf(Color.Cyan, Color.Blue)
+    val context = LocalContext.current
+    val db = SwimLogDatabase.getDatabase(context)
+    val dao = db.swimLogDao()
+
+    val viewModel: WorkoutEntryViewModel = viewModel(
+        factory = WorkoutEntryViewModelFactory(dao)
+    )
+
 
     Column(
         modifier = modifier
@@ -89,9 +98,12 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
             )
         }
 
-        Button(onClick = { /*TODO*/ }) {
-            Text("Submit",
-            color = Color.White)
+        Button(onClick = {
+            viewModel.saveEntry {
+                navController.navigate("main")
+            }
+        }) {
+            Text("Submit", color = Color.White)
         }
 
     }
