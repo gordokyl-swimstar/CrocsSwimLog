@@ -3,7 +3,10 @@ package com.kylegordon.crocsswimlog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -59,7 +62,8 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
             modifier = modifier
                 .background(Color.White)
                 .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
             // Date Of Workout
             OutlinedTextField(
@@ -96,16 +100,27 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 textStyle = androidx.compose.ui.text.TextStyle(color = Color.Black),
                 modifier = modifier.padding(10.dp)
             )
-        }
 
-        Button(onClick = {
-            viewModel.saveEntry {
-                navController.navigate("main")
+            Button(
+                onClick = {
+                // This will navigate to camera()
+            }) {
+                Text("Add/Take Photo", color = Color.White)
             }
-        }) {
-            Text("Submit", color = Color.White)
         }
 
-    }
+        Spacer(modifier = Modifier.padding(5.dp))
 
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+
+            Button(onClick = { viewModel.saveEntry { navController.navigate("main") } })
+                { Text("Submit", color = Color.White) }
+
+            Button(onClick = { navController.navigate("main") })
+                { Text("Cancel", color = Color.White) }
+        }
+    }
 }
