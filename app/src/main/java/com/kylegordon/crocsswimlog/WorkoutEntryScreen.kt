@@ -19,11 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.kylegordon.crocsswimlog.data.SwimLogDatabase
 
 @Composable
@@ -70,7 +74,7 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 value = workoutDate,
                 onValueChange = { viewModel.setWorkoutDate(it) },
                 placeholder = { Text("Enter Date of Workout", color = Color.Black) },
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.Black),
+                textStyle = TextStyle(color = Color.Black),
                 modifier = modifier.padding(10.dp)
             )
 
@@ -79,7 +83,7 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 value = duration,
                 onValueChange = { viewModel.setWorkoutDuration(it) },
                 placeholder = { Text("Enter Duration of Workout", color = Color.Black) },
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.Black),
+                textStyle = TextStyle(color = Color.Black),
                 modifier = modifier.padding(10.dp)
             )
 
@@ -88,7 +92,7 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 value = mainStroke,
                 onValueChange = { viewModel.setMainStroke(it) },
                 placeholder = { Text("Enter Main Stroke Swam", color = Color.Black) },
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.Black),
+                textStyle = TextStyle(color = Color.Black),
                 modifier = modifier.padding(10.dp)
             )
 
@@ -97,16 +101,16 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 value = totalYardage,
                 onValueChange = { viewModel.setTotalYardage(it) },
                 placeholder = { Text("Enter Total Yardage", color = Color.Black) },
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.Black),
+                textStyle = TextStyle(color = Color.Black),
                 modifier = modifier.padding(10.dp)
             )
 
             Button(
-                onClick = {
-                // This will navigate to camera()
-            }) {
-                Text("Add/Take Photo", color = Color.White)
-            }
+                onClick = { navController.navigate("camera") },
+                content = {
+                    Text("Add/Take Photo")
+                }
+            )
         }
 
         Spacer(modifier = Modifier.padding(5.dp))
