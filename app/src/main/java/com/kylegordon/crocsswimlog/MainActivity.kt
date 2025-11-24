@@ -43,6 +43,7 @@ fun CrocsSwimLogApp() {
     val navController = rememberNavController()
     val context = LocalContext.current
     val dao = SwimLogDatabase.getDatabase(context).swimLogDao()
+    val cameraviewModel: CameraViewModel = viewModel()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -117,8 +118,9 @@ fun CrocsSwimLogApp() {
             composable("dotd") { DOTDScreen(navController, viewModel = DOTDViewModel()) }
 
             //camera screen
-            composable("camera") { CameraScreen(navController, viewModel = CameraViewModel(Application())
-            ) }
+            composable("camera") {
+                CameraScreen(navController, viewModel = cameraviewModel)
+            }
         }
     }
 }

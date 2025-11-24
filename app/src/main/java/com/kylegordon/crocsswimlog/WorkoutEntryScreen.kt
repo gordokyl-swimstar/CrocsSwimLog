@@ -41,9 +41,7 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
     val db = SwimLogDatabase.getDatabase(context)
     val dao = db.swimLogDao()
 
-    val viewModel: WorkoutEntryViewModel = viewModel(
-        factory = WorkoutEntryViewModelFactory(dao)
-    )
+
 
 
     Column(
