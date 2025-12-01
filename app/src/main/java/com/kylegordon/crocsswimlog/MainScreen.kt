@@ -43,9 +43,10 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier, view
         )
 
         Text("Created by Kyle and Nate", color = Color.White)
-        Text("This Will Be Inspirational Quote Pulled From API", color = Color.White)
 
-        Spacer(modifier = Modifier.height(15.dp))
+        Text("Become stronger than the day before", color = Color.White, fontSize = 18.sp)
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Text(
             "Analytics Dashboard",

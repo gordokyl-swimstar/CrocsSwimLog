@@ -18,29 +18,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.kylegordon.crocsswimlog.data.SwimLogDatabase
 
 @Composable
-fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifier, viewModel: WorkoutEntryViewModel) {
+fun WorkoutEntryScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    viewModel: WorkoutEntryViewModel
+) {
     val workoutDate by viewModel.workoutDate.collectAsState()
     val duration by viewModel.duration.collectAsState()
     val mainStroke by viewModel.mainStroke.collectAsState()
     val totalYardage by viewModel.totalYardage.collectAsState()
+    val photoLog by viewModel.photoLog.collectAsState()
+
     val colorList = listOf(Color.Cyan, Color.Blue)
-    val context = LocalContext.current
-    val db = SwimLogDatabase.getDatabase(context)
-    val dao = db.swimLogDao()
 
-    val viewModel: WorkoutEntryViewModel = viewModel(
-        factory = WorkoutEntryViewModelFactory(dao)
-    )
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+    val capturedPhoto = savedStateHandle?.get<String>("capturedPhoto")
 
+    if (capturedPhoto != null) {
+        viewModel.setPhotoLog(capturedPhoto)
+        savedStateHandle.remove<String>("capturedPhoto")
+    }
 
     Column(
         modifier = modifier
@@ -51,7 +54,8 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        Text("New Swim Log Entry",
+        Text(
+            "New Swim Log Entry",
             modifier = Modifier.padding(16.dp),
             color = Color.White,
             fontSize = 32.sp,
@@ -64,7 +68,8 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
+
             // Date Of Workout
             OutlinedTextField(
                 value = workoutDate,
@@ -101,11 +106,19 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
                 modifier = modifier.padding(10.dp)
             )
 
-            Button(
-                onClick = {
-                // This will navigate to camera()
-            }) {
+            // Photo picker button
+            Button(onClick = { navController.navigate("camera") }) {
                 Text("Add/Take Photo", color = Color.White)
+            }
+
+
+            // Optional — preview current photo path
+            if (!photoLog.isNullOrEmpty()) {
+                Text(
+                    text = "Photo selected!",
+                    color = Color.Black,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
         }
 
@@ -116,11 +129,13 @@ fun WorkoutEntryScreen(navController: NavController, modifier: Modifier = Modifi
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
 
-            Button(onClick = { viewModel.saveEntry { navController.navigate("main") } })
-                { Text("Submit", color = Color.White) }
+            Button(onClick = { viewModel.saveEntry { navController.navigate("main") } }) {
+                Text("Submit", color = Color.White)
+            }
 
-            Button(onClick = { navController.navigate("main") })
-                { Text("Cancel", color = Color.White) }
+            Button(onClick = { navController.navigate("main") }) {
+                Text("Cancel", color = Color.White)
+            }
         }
     }
 }

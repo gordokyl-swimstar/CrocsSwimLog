@@ -1,6 +1,7 @@
 package com.kylegordon.crocsswimlog
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -114,6 +115,19 @@ fun CrocsSwimLogApp() {
 
             // Drill of the Day Screen
             composable("dotd") { DOTDScreen(navController, viewModel = DOTDViewModel()) }
+
+            // Camera Screen
+            composable("camera") {
+                val context = LocalContext.current
+                val cameraVm: CameraViewModel = viewModel(
+                    factory = CameraViewModelFactory(context.applicationContext as Application)
+                )
+
+                CameraScreen(
+                    navController = navController,
+                    viewModel = cameraVm
+                )
+            }
         }
     }
 }

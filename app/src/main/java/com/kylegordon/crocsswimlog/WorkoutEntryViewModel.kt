@@ -27,10 +27,15 @@ class WorkoutEntryViewModel(
     private val _totalYardage = MutableStateFlow("")
     val totalYardage = _totalYardage.asStateFlow()
 
+    private val _photoLog = MutableStateFlow<String?>(null)
+    val photoLog = _photoLog.asStateFlow()
+
     fun setWorkoutDate(e: String) { _workoutDate.value = e }
     fun setWorkoutDuration(e: String) { _duration.value = e }
     fun setMainStroke(e: String) { _mainStroke.value = e }
     fun setTotalYardage(e: String) { _totalYardage.value = e }
+    fun setPhotoLog(uri: String?) { _photoLog.value = uri }
+
 
 
     // SAVE ENTRY TO ROOM DATABASE
@@ -42,7 +47,8 @@ class WorkoutEntryViewModel(
                 dow = parsedDate,
                 workoutLength = _duration.value.toIntOrNull() ?: 0,
                 mainStroke = _mainStroke.value,
-                totalYardage = _totalYardage.value.toIntOrNull() ?: 0
+                totalYardage = _totalYardage.value.toIntOrNull() ?: 0,
+                photoLog = _photoLog.value
             )
 
             dao.insert(entry)

@@ -22,7 +22,8 @@ data class SwimLogEntry(
     val dow: Date,
     val workoutLength: Int,
     val mainStroke: String,
-    val totalYardage: Int
+    val totalYardage: Int,
+    val photoLog: String? = null
 )
 
 @Dao
@@ -44,7 +45,7 @@ interface SwimLogDao {
 
 @Database(
     entities = [SwimLogEntry::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 

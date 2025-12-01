@@ -40,7 +40,6 @@ class MainScreenViewModel(
         val avgYardage = entries.map { it.totalYardage }.average().toInt()
         val avgDuration = entries.map { it.workoutLength }.average().toInt()
 
-        // most common stroke
         val mcstroke = entries
             .groupingBy { it.mainStroke }
             .eachCount()
