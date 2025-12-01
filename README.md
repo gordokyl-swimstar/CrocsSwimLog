@@ -16,10 +16,11 @@ The Swim Log screen shows any entries added to the swim log, with the latest ent
 NEW ENTRY SCREEN - 
 The New Entry Screen is a form consisting of 4 text input boxes and a button to take a photo. Below those are a submit button to send in your entry, which upon click puts your inputs into the database, and a cancel button, both of which redirect to the Home Page after clicking on them. In order, you input the date of the workout, the time duration of the workout (in minutes), the main stroke swam, and the total yardage. Upon clicking the add/take photo button, you'll be redirected to a new screen to open the camera. Upon clicking that button, the camera will be opened, allowing a photo to be taken. Once a photo is taken, you're redirected back to the New Entry Screen, where right below the button, the text, "photo attatched" will now appear right under, as long as a valid photo was taken.
 
-DRILL OF THE DAY SCREEN
+DRILL OF THE DAY SCREEN - 
 This screen is straight and to the point. Upon loading onto the screen, a random drill is chosen out of 20 potential options. Once chosen, this drill is displayed with all the detail that goes with it, including its name, a photo of the stroke in question, the drills description, and the reccommended yardage for getting the most out of the drill. At the bottom, a "Generate New Drill" button sits, and upon click, picks a new random drill and updates the information on the screen accordingly.
 
 Crocs Swim Log was made with passion for the craft of both UX/UI Design, App Creation, and Swimming, and came out as a product honed and finely tuned to help any potential user. As you explore and use the app, I hope that you feel the same energy we did when creating it.
 
 Link to Presentation: ___
+
 Link to Video Tutorial: ___
