@@ -21,6 +21,6 @@ This screen is straight and to the point. Upon loading onto the screen, a random
 
 Crocs Swim Log was made with passion for the craft of both UX/UI Design, App Creation, and Swimming, and came out as a product honed and finely tuned to help any potential user. As you explore and use the app, I hope that you feel the same energy we did when creating it.
 
-Link to Presentation: ___
+Link to Presentation: (https://docs.google.com/presentation/d/18peU5QjImixyDMQ0bYR1ZI3251G6BIwbh-N-e9LRz8c/edit?usp=sharing)
 
 Link to Video Tutorial: ___
