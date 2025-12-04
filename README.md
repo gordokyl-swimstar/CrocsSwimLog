@@ -23,4 +23,4 @@ Crocs Swim Log was made with passion for the craft of both UX/UI Design, App Cre
 
 Link to Presentation: (https://docs.google.com/presentation/d/18peU5QjImixyDMQ0bYR1ZI3251G6BIwbh-N-e9LRz8c/edit?usp=sharing)
 
-Link to Video Tutorial: ___
+Link to Video Tutorial: https://drive.google.com/file/d/1QGtMHhbRQ_o03z9lzMbyPaagl--_QbQr/view?usp=sharing 
